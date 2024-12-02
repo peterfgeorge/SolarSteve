@@ -36,19 +36,22 @@ public class Heart : MonoBehaviour
 
         if (HeartAmount < 1)
         {
-            heartImage.sprite = null;  // Set to empty Heart
+            Destroy(gameObject);  // Set to empty Heart
         }
         else if (HeartAmount == 1)
         {
             heartImage.sprite = oneHeart;   // Set to one Heart
+            heartImage.SetNativeSize();
         }
         else if (HeartAmount == 2)
         {
             heartImage.sprite = twoHeart;   // Set to two batteries
+            heartImage.SetNativeSize();
         }
         else if (HeartAmount == 3)
         {
             heartImage.sprite = threeHeart; // Set to three batteries
+            heartImage.SetNativeSize();
         }
     }
 }
