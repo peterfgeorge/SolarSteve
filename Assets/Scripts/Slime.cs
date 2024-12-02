@@ -17,8 +17,10 @@ public class Slime : MonoBehaviour
     private bool isGrounded = false;
     private bool isWall = false;
     private float jumpTimer;
+    private bool goingUp = false;
 
     private EnemySpawner enemySpawner;
+
 
 
     void Start()
@@ -32,6 +34,13 @@ public class Slime : MonoBehaviour
 
     void Update()
     {
+        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+
+        if(rb.velocity.y > 0) {
+            animator.SetBool("goingUp", true);
+        } else {
+            animator.SetBool("goingUp", false);
+        }
         // Update ground and wall detection
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, whatIsGround);
         isWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, whatIsWall);
