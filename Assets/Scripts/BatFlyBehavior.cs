@@ -37,27 +37,25 @@ public class FlyBehavior : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // Horizontal flying movement
-        if (batController.facingRight)
-        {
-            animator.transform.Translate(Vector2.right * flySpeed * Time.deltaTime);
-        }
-        else
-        {
-            animator.transform.Translate(Vector2.left * flySpeed * Time.deltaTime);
-        }
-
         if(foundIdleLocation) {
             animator.transform.position = Vector2.MoveTowards(animator.transform.position, targetPosition, flySpeed * Time.deltaTime);
 
-            // Check if bat has reached the target
-            if (Vector2.Distance(animator.transform.position, targetPosition) <= 0.1f) // Slightly smaller threshold
+            float distanceToBranch = Vector2.Distance(animator.transform.position, targetPosition);
+            if (distanceToBranch <= 0.1f)
             {
-                animator.transform.position = targetPosition;  // Snap to position to prevent jittering
-                foundIdleLocation = false;
                 animator.SetBool("isIdle", true);
+                foundIdleLocation = false;
             }
         } else {
+            // Horizontal flying movement
+            if (batController.facingRight)
+            {
+                animator.transform.Translate(Vector2.right * flySpeed * Time.deltaTime);
+            }
+            else
+            {
+                animator.transform.Translate(Vector2.left * flySpeed * Time.deltaTime);
+            }
             // Vertical sine wave movement.
             elapsedTime += Time.deltaTime;
             float newY = initialY + Mathf.Sin(elapsedTime * verticalFrequency) * verticalAmplitude;
