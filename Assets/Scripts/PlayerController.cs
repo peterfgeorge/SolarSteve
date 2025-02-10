@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
         sr = GetComponent<SpriteRenderer>();
         originalColor = sr.color;
+        Physics2D.IgnoreLayerCollision(7, 9, true);
     }
 
     void FixedUpdate() {
@@ -95,5 +96,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player Died");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("hi!");
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), true);
+        Physics2D.IgnoreLayerCollision(7, 9, true);
+        Debug.Log(LayerMask.NameToLayer("Enemy"));
+        Debug.Log(LayerMask.NameToLayer("Player"));
     }
 }

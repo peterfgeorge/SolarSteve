@@ -22,6 +22,7 @@ public class FlyBehavior : StateMachineBehaviour
     private Vector2 targetPosition;
 
     private BatController batController;
+    private Branches branches;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -32,6 +33,7 @@ public class FlyBehavior : StateMachineBehaviour
         checkTimer = 0f;  // Reset the timer.
 
         batController = FindObjectOfType<BatController>();
+        branches = FindObjectOfType<Branches>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -75,7 +77,7 @@ public class FlyBehavior : StateMachineBehaviour
                 idleTimer = 0f;  // Reset the timer
 
                 // Select a random branch from the array
-                Transform selectedBranch = batController.branches[Random.Range(0, batController.branches.Length)];
+                Transform selectedBranch = branches.branchesBatIdle[Random.Range(0, branches.branchesBatIdle.Length)];
                 Vector2 branchPosition = selectedBranch.transform.position;
                 double db = selectedBranch.transform.position.x;
 
